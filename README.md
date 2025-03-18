@@ -72,3 +72,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 =======
 # weather-app
 >>>>>>> 0d6ce956c444503041675c9148405b12a65f60a0
+>>>>>>>
+>>>>>>> ![Alt text](image.png)
