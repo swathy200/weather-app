@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.css-58dshk-MuiContainer-root {
+  padding: 0px !important;
+}
