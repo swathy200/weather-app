@@ -7,11 +7,11 @@ import {
   Typography,
   Card,
   CardContent,
-  CardMedia,
   CircularProgress,
+  Grid,
 } from "@mui/material";
 import Lottie from "lottie-react";
-import './App.css';
+import "./App.css";
 
 import clearSky from "./animations/clearSky.json";
 import cloudy from "./animations/cloudySky.json";
@@ -57,12 +57,10 @@ const WeatherApp = () => {
     }
   };
 
-  // Function to get the correct Lottie animation based on weather
   const getWeatherAnimation = () => {
-    if (!weather) return clearSky; // Default animation
+    if (!weather) return clearSky;
 
     const condition = weather.weather[0].main.toLowerCase();
-
     switch (condition) {
       case "clear":
         return clearSky;
@@ -80,92 +78,52 @@ const WeatherApp = () => {
   };
 
   return (
-    <div>
+    <div className="weather-app">
       <Lottie
         animationData={getWeatherAnimation()}
         loop
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-          opacity: 0.7,
-        }}
+        className="background-animation"
       />
-      <Container
-        maxWidth="sm"
-        sx={{
-          textAlign: "center",
-          p: 3,
-          borderRadius: 3,
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          color: "#fff",
-        }}
-      >
-        {/* Background Animation */}
-
-        <Typography variant="h4" gutterBottom sx={{color:"lightblue"}}>
-          WEATHER APP
+      <Container maxWidth="sm" className="glass-container">
+        <Typography variant="h3" className="title">
+          Weather App
         </Typography>
-
         <TextField
-          label="Enter City Name"
+          label="Enter City"
           variant="outlined"
           fullWidth
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          sx={{ mb: 2, backgroundColor: "#fff", borderRadius: 1 }}
+          className="input"
         />
-
+        <br/>
         <Button
           variant="contained"
           color="primary"
           onClick={fetchWeather}
-          fullWidth
+          className="search-btn"
+          sx={{margin:'12px'}}
         >
           Get Weather
         </Button>
-
-        {loading && <CircularProgress sx={{ mt: 2 }} />}
-
+        {loading && <CircularProgress className="loader" />}
         {error && (
-          <Typography color="error" sx={{ mt: 2 }}>
+          <Typography color="error" className="error-text">
             {error}
           </Typography>
         )}
-
         {weather && (
-          <Card
-            sx={{
-              mt: 3,
-              p: 2,
-              bgcolor: "rgba(48, 118, 197, 0.2)",
-              color: "#fff",
-            }}
-          >
+          <Card className="weather-card" sx={{backgroundColor:'transparent'}}>
             <CardContent>
-              <Typography variant="h5" sx={{color:"Blue"}}>
+              <Typography variant="h4">
                 {weather.name}, {weather.sys.country}
               </Typography>
-              <Typography variant="h6" sx={{color:"Blue"}}>
+              <Typography variant="h5">
                 Temperature: {weather.main.temp}°C
               </Typography>
-              <Typography variant="body1" sx={{color:"Blue"}}>
+              <Typography>
                 {weather.weather[0].main} - {weather.weather[0].description}
               </Typography>
-              <CardMedia
-                component="img"
-                image={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                alt={weather.weather[0].description}
-                sx={{ width: 80, mx: "auto", mt: 1 }}
-              />
             </CardContent>
           </Card>
         )}
